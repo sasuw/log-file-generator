@@ -5,7 +5,7 @@ Generates a mock log file in the specified path. If no interval option is given,
 
 ## Usage
 
-node bin/index.js
+``node bin/index.js``
 
 ### Options
 
