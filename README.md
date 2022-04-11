@@ -1,11 +1,25 @@
 ## log-file-generator
 
-Generates a mock log file in the specified path. If no interval option is given, a new line is generated every 2 seconds.
+Generates a mock log file in the specified path and appends a new line to it in a specified interval until stopped. If no interval option is given, a new line is generated every 2 seconds.
 
+Every line looks like this (with current date and time):
+> 2022-04-11 12:23:11 DEBUG [Component] - Log entry
 
 ## Usage
 
-``node bin/index.js``
+### Local
+
+    node bin/index.js
+
+### Global
+
+Install with
+
+    npm i -g log-file-generator
+
+Run with 
+
+    log-file-generator -f [filename] -i [interval]
 
 ### Options
 
@@ -16,4 +30,4 @@ Generates a mock log file in the specified path. If no interval option is given,
 
 ### Quitting
 
-Ctrl+C
+    Ctrl+C
