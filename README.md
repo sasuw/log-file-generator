@@ -2,7 +2,7 @@
 
 Generates a mock log file in the specified path and appends a new line to it in a specified interval until stopped. If no interval option is given, a new line is generated every 2 seconds.
 
-Every line looks like this (with current date and time):
+Every line looks like this (with current date and time and a random log level, one of 'ERROR','INFO','WARN','TRACE' or 'OTHER'):
 > 2022-04-11 12:23:11 DEBUG [Component] - Log entry
 
 ## Usage
