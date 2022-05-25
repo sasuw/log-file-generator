@@ -1,8 +1,7 @@
 {
   "name": "log-file-generator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generates a mock log file in the specified path and appends a new line to it in a specified interval until stopped.",
-  "main": "./lib/readNpmPackageAuthors.js",
   "bin": {
     "log-file-generator": "./bin/index.js"
   },

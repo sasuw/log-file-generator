@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const ObjectUtils = require('../lib/objectUtils');
 const commandLineArgs = require('command-line-args')
 const commandLineUsage = require('command-line-usage')
