@@ -78,7 +78,10 @@ function getTimestamp () {
 let logStream = null;
 function writeLogLine(filepath){
     logStream = fs.createWriteStream(filepath, {flags: 'a'});
-    let logLine = getTimestamp() + ' DEBUG [Component] - Log entry\n';
+    let logLevels = Array.of('ERROR','INFO','WARN','TRACE', 'OTHER');
+    let logLevelIndex = Math.floor(Math.random()*5);
+    let logLevel = logLevelIndex + ' ' + logLevels[logLevelIndex];
+    let logLine = getTimestamp() + ' ' + logLevel + ' [Component] - Log entry\n';
     logStream.write(logLine);
 }
 
