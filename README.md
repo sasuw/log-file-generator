@@ -9,23 +9,32 @@ Every line looks like this (with current date and time and a random log level, o
 
 ### Local
 Run with
-    node bin/index.js
+```
+node bin/index.js
+```
 
 ### Global
 
 Install with
-    npm i -g log-file-generator
+```
+npm i -g log-file-generator
+```
 
-Run with 
-    log-file-generator -f [filename] -i [interval]
+Run with
+```
+log-file-generator -f [filename] -i [interval]
+```
 
 ### Options
 
-``-i, --interval string   Interval in seconds for writing a new log line. If omitted, default value of 2 seconds is used.``                                                            
-``-f, --file file path    File path of the log file to generate.``                                        
-``-h, --help string       Print this usage guide.``                                                       
+``-i, --interval string   Interval in seconds for writing a new log line. If omitted, default value of 2 seconds is used.``  
+
+``-f, --file file path    File path of the log file to generate.``  
+``-h, --help string       Print this usage guide.``  
 ``-v, --version string    Prints version number of log-file-generator``
 
 ### Quitting
 
-    Ctrl+C
+```
+Ctrl+C
+```
