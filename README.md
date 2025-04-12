@@ -8,17 +8,15 @@ Every line looks like this (with current date and time and a random log level, o
 ## Usage
 
 ### Local
-
+Run with
     node bin/index.js
 
 ### Global
 
 Install with
-
     npm i -g log-file-generator
 
 Run with 
-
     log-file-generator -f [filename] -i [interval]
 
 ### Options

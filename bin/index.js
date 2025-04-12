@@ -17,13 +17,21 @@ function printToConsole(msg) {
 
 (async function () {
     const optionDefinitions = [
-        {name: 'interval', alias: 'i', type: Number},
-        {name: 'file', alias: 'f', type: String},
-        {name: 'help', alias: 'h', type: Boolean},
-        {name: 'version', alias: 'v', type: Boolean}
+        { name: 'interval', alias: 'i', type: Number },
+        { name: 'file', alias: 'f', type: String },
+        { name: 'help', alias: 'h', type: Boolean },
+        { name: 'version', alias: 'v', type: Boolean }
     ]
 
-    const options = commandLineArgs(optionDefinitions);
+    let options;
+    try {
+        options = commandLineArgs(optionDefinitions, { stopAtFirstUnknown: true });
+    } catch (error) {
+        console.error(error.message);
+        process.exit(1);
+    }
+
+    const unknown = options._unknown || [];
 
     if (ObjectUtils.isEmpty(options) || options.help) {
         displayHelp();
@@ -35,34 +43,40 @@ function printToConsole(msg) {
         process.exit(0);
     }
 
-    let interval = defaultInterval;
-    if (options.interval != null){
-        interval = options.interval;
+    // If no file is specified, use the first unknown argument as the file path
+    if (!options.file && unknown.length > 0) {
+        options.file = unknown[0];
     }
 
-    if (options.file != null){
-        let path = options.file;
-        let fileAdjective = 'new';
-        try {
-            if (fs.existsSync(path)) {
-                fileAdjective = 'existing';
-                //printToConsole('Found existing file at ' + path);
-            }else{
-                //printToConsole('Creating file ' + path);
-                fs.openSync(path,'w');
-            }
-        } catch(err) {
-            console.error('Error opening or creating file ' + path);
-            console.error(err);
-            process.exit(1);
-        }
-        printToConsole('Creating mock log entries to ' + fileAdjective + ' file ' + chalk.underline(path) + ' every ' + interval + ' seconds');
-
-        let writeLogLineToFile = function(){
-            writeLogLine(path);
-        }
-        setInterval(writeLogLineToFile, interval * 1000);
+    // Check if file path is provided
+    if (!options.file) {
+        console.error('Error: No file path specified.');
+        displayHelp();
+        process.exit(1);
     }
+
+    let interval = options.interval || defaultInterval;
+
+    let path = options.file;
+    let fileAdjective = 'new';
+    try {
+        if (fs.existsSync(path)) {
+            fileAdjective = 'existing';
+        } else {
+            fs.openSync(path, 'w');
+        }
+    } catch (err) {
+        console.error('Error opening or creating file ' + path);
+        console.error(err);
+        process.exit(1);
+    }
+
+    printToConsole('Creating mock log entries to ' + fileAdjective + ' file ' + chalk.underline(path) + ' every ' + interval + ' seconds');
+
+    let writeLogLineToFile = function(){
+        writeLogLine(path);
+    }
+    setInterval(writeLogLineToFile, interval * 1000);
 
 })();
 
@@ -121,12 +135,14 @@ function displayHelp() {
         }
     ]
     const usage = commandLineUsage(sections);
-    printToConsole(usage);
+    printToConsole(usage)
 }
 
-function cleanUpBeforeExit(){
+function cleanUpBeforeExit() {
     try {
-        logStream.end();
+        if(logStream){
+            logStream.end();
+        }
     }catch(err){
         console.error('cleanUpBeforeExit error: ' + err);
     }
